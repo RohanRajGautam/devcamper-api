@@ -1,4 +1,5 @@
 const Bootcamps = require('../models/Bootcamps');
+const ErrorResponse = require('../utils/errResponse');
 
 // @desc      get all the bootcamps
 // @routes    GET /api/v1/bootcamps
@@ -21,11 +22,17 @@ exports.getBootcamp = async (req, res, next) => {
   try {
     const bootcamp = await Bootcamps.findById(req.params.id);
     if (!bootcamp) {
-      return res.status(400).json({ success: false });
+      return next(
+        new ErrorResponse(
+          `Bootcamp not found with the id of ${req.params.id}`,
+          404
+        )
+      );
     }
     res.status(200).json({ success: true, data: bootcamp });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
+    // res.status(400).json({ success: false });
   }
 };
 
@@ -37,7 +44,8 @@ exports.createBootcamp = async (req, res, next) => {
     const bootcamps = await Bootcamps.create(req.body);
     res.status(201).json({ success: true, data: bootcamps });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
+    // res.status(400).json({ success: false });
   }
 };
 
@@ -56,12 +64,17 @@ exports.updateBootcamp = async (req, res, next) => {
     );
 
     if (!bootcamp) {
-      res.status(400).json({ success: false });
+      next(
+        new ErrorResponse(
+          `Bootcamp not found with the id of ${req.params.id}`,
+          404
+        )
+      );
     }
 
     res.status(200).json({ success: true, data: bootcamp });
   } catch (err) {
-    res.status(400).json({ success: false });
+    next(err);
   }
 };
 
@@ -72,11 +85,16 @@ exports.deleteBootcamp = async (req, res, next) => {
   try {
     const bootcamp = await Bootcamps.findByIdAndDelete(req.params.id);
     if (!bootcamp) {
-      return res.status(400).json({ success: false });
+      next(
+        new ErrorResponse(
+          `Bootcamp not found with the id of ${req.params.id}`,
+          404
+        )
+      );
     }
     res.status(200).json({ success: true, msg: 'Item deleted successfully' });
-  } catch (error) {
-    res.status(400).json({ success: false });
+  } catch (err) {
+    next(err);
   }
   res
     .status(200)
