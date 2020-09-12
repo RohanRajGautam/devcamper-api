@@ -80,7 +80,6 @@ exports.getBootcamps = asyncHandler(async (req, res, next) => {
     data: bootcamps,
   });
 });
-``;
 
 // @desc      get single bootcamps
 // @routes    GET /api/v1/bootcamps/:id
