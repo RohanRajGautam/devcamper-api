@@ -3,6 +3,7 @@ const ErrorResponse = require('../utils/errResponse');
 const asyncHandler = require('../middleware/async');
 
 // @desc      get all courses
+// @routes    GET /api/v1/courses
 // @routes    GET /api/v1/bootcamps/:bootcampId/courses
 // @access    Public
 exports.getCourses = asyncHandler(async (req, res, next) => {
@@ -23,5 +24,27 @@ exports.getCourses = asyncHandler(async (req, res, next) => {
     success: true,
     count: courses.length,
     data: courses,
+  });
+});
+
+// @desc      Get single course
+// @routes    GET /api/v1/courses/:courseId
+// @access    Public
+exports.getCourse = asyncHandler(async (req, res, next) => {
+  const course = await (await Course.findById(req.params.id)).populate({
+    path: 'Bootcamp',
+    select: 'name description',
+  });
+
+  if (!course) {
+    return next(
+      new ErrorResponse(`No courses with the id of ${req.params.id}`),
+      404
+    );
+  }
+
+  res.status(200).json({
+    success: true,
+    data: course,
   });
 });
