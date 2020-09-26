@@ -8,9 +8,9 @@ const {
   getBootcampsInRadius,
   uploadPhoto,
 } = require('../controllers/bootcamps');
+const Bootcamps = require('../models/Bootcamps');
 
 const { protect, authorize } = require('../middleware/auth');
-const Bootcamps = require('../models/Bootcamps');
 const advancedResults = require('../middleware/advancedResults');
 
 // Include other resource routers
