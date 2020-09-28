@@ -9,6 +9,7 @@ const helmet = require('helmet');
 const xss = require('xss-clean');
 const rateLimit = require('express-rate-limit');
 const hpp = require('hpp');
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
@@ -62,6 +63,9 @@ app.use(limiter);
 
 //prevent http params pollution
 app.use(hpp());
+
+//enable cross-origin resource sharing
+app.use(cors());
 
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
