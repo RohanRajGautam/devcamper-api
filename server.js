@@ -3,8 +3,9 @@ const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
 const colors = require('colors');
-const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
+const mongoSanitize = require('express-mongo-sanitize');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
 
@@ -36,6 +37,9 @@ if (process.env.NODE_ENV === 'development') {
 
 //file uploading
 app.use(fileUpload());
+
+//sanitize data
+app.use(mongoSanitize());
 
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
