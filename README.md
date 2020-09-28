@@ -96,16 +96,6 @@ Create the backend for a bootcamp directory website. All of the functionality be
 - Use docgen to create HTML files from Postman
 - Add html files as the / route for the api
 
-## Deployment (Digital Ocean)
-- Push to Github
-- Create a droplet - https://m.do.co/c/5424d440c63a
-- Clone repo on to server
-- Use PM2 process manager
-- Enable firewall (ufw) and open needed ports
-- Create an NGINX reverse proxy for port 80
-- Connect a domain name
-- Install an SSL using Let's Encrypt
-
 ## Code Related Suggestions
 - NPM scripts for dev and production env
 - Config file for important constants
@@ -115,3 +105,48 @@ Create the backend for a bootcamp directory website. All of the functionality be
 - Validation using Mongoose and no external libraries
 - Use async/await (create middleware to clean up controller methods)
 - Create a database seeder to import and destroy data
+
+## Usage
+
+Rename "config/config.env.env" to "config/config.env" and update the values/settings to your own
+
+## Install Dependencies
+
+```
+npm install
+```
+
+## Run App
+
+```
+# Run in dev mode
+npm run dev
+
+# Run in prod mode
+npm start
+```
+
+## Database Seeder
+
+To seed the database with users, bootcamps, courses and reviews with data from the "\_data" folder, run
+
+```
+# Destroy all data
+node seeder -d
+
+# Import all data
+node seeder -i
+```
+
+## Credits
+
+Course: Node.js API Masterclass With Express & MongoDB. Teacher: Brad Traversy
+
+## Demo
+
+Extensive documentation with examples [here](https://documenter.getpostman.com/view/11796823/TVKJwZqJ)
+
+- Version: 1.0.0
+- License: MIT
+- Author: Rohan Raj Gautam
+
