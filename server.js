@@ -7,6 +7,7 @@ const fileUpload = require('express-fileupload');
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 const xss = require('xss-clean');
+const rateLimit = require('express-rate-limit');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
@@ -48,6 +49,15 @@ app.use(helmet());
 
 //prevent xss attacks
 app.use(xss());
+
+//rate limit for api request
+const limiter = rateLimit({
+  windowMs: 10 * 60 * 1000, //10 min
+  max: 100, //limit each ip to 100 request per windowMs
+});
+
+//apply to all request
+app.use(limiter);
 
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
