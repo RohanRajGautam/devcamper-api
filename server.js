@@ -8,6 +8,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 const xss = require('xss-clean');
 const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 const errorHandler = require('./middleware/error');
@@ -58,6 +59,9 @@ const limiter = rateLimit({
 
 //apply to all request
 app.use(limiter);
+
+//prevent http params pollution
+app.use(hpp());
 
 //set static folder
 app.use(express.static(path.join(__dirname, 'public')));
